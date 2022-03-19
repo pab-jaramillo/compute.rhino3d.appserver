@@ -1,288 +1,289 @@
+// Import libraries
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.126.0/build/three.module.js'
 import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.126.0/examples/jsm/controls/OrbitControls.js'
-import { Rhino3dmLoader } from 'https://cdn.jsdelivr.net/npm/three@0.126.0/examples/jsm/loaders/3DMLoader.js'
 import rhino3dm from 'https://cdn.jsdelivr.net/npm/rhino3dm@0.15.0-beta/rhino3dm.module.js'
+import { RhinoCompute } from 'https://cdn.jsdelivr.net/npm/compute-rhino3d@0.13.0-beta/compute.rhino3d.module.js'
+import { Rhino3dmLoader } from 'https://cdn.jsdelivr.net/npm/three@0.124.0/examples/jsm/loaders/3DMLoader.js'
 
-/* eslint no-undef: "off", no-unused-vars: "off" */
-
-const loader = new Rhino3dmLoader()
-loader.setLibraryPath( 'https://cdn.jsdelivr.net/npm/rhino3dm@0.15.0-beta/' )
-
-const definition = 'PI_Example_ModuleAggGr'
+//GH script
+const definitionName = 'PI_Example_ModuleAggGr'
 
 // setup input change events
 const inhabitants_slider = document.getElementById( 'Number_People' )
 inhabitants_slider.addEventListener( 'mouseup', onSliderChange, false )
 inhabitants_slider.addEventListener( 'touchend', onSliderChange, false )
+
 const face_slider = document.getElementById( 'Fase_Extrusion' )
 face_slider.addEventListener( 'mouseup', onSliderChange, false )
 face_slider.addEventListener( 'touchend', onSliderChange, false )
+
 const windowbm_slider = document.getElementById( 'Windows_Module_Base' )
 windowbm_slider.addEventListener( 'mouseup', onSliderChange, false )
 windowbm_slider.addEventListener( 'touchend', onSliderChange, false )
+
 const Window_Aperture_BM = document.getElementById( 'Window_Aperture_MB' )
 Window_Aperture_BM.addEventListener( 'mouseup', onSliderChange, false )
 Window_Aperture_BM.addEventListener( 'touchend', onSliderChange, false )
+
 const windowm02_slider = document.getElementById( 'Windows_Module02' )
 windowm02_slider.addEventListener( 'mouseup', onSliderChange, false )
 windowm02_slider.addEventListener( 'touchend', onSliderChange, false )
+
 const Window_Aperture_M02 = document.getElementById( 'Window_Aperture_M02' )
 Window_Aperture_M02.addEventListener( 'mouseup', onSliderChange, false )
 Window_Aperture_M02.addEventListener( 'touchend', onSliderChange, false )
+
 const windowm03_slider = document.getElementById( 'Windows_Module03' )
 windowm03_slider.addEventListener( 'mouseup', onSliderChange, false )
 windowm03_slider.addEventListener( 'touchend', onSliderChange, false )
+
 const Window_Aperture_M03 = document.getElementById( 'Window_Aperture_M03' )
 Window_Aperture_M03.addEventListener( 'mouseup', onSliderChange, false )
 Window_Aperture_M03.addEventListener( 'touchend', onSliderChange, false )
 
-// load the rhino3dm library
-let rhino, doc
-rhino3dm().then(async m => {
-  console.log('Loaded rhino3dm.')
-  rhino = m // global
 
-  init()
-  compute()
+
+//Set up run and download buttons
+const runButton = document.getElementById("runButton")
+runButton.onclick = run
+const downloadButton = document.getElementById("downloadButton")
+downloadButton.onclick = download 
+
+//Rhino compute
+const loader = new Rhino3dmLoader()
+loader.setLibraryPath('https://cdn.jsdelivr.net/npm/rhino3dm@0.15.0-beta/')
+
+let rhino, definition, doc
+rhino3dm().then(async m => {
+    console.log('Loaded rhino3dm.')
+    rhino = m // global
+
+    //RhinoCompute.url = getAuth( 'RHINO_COMPUTE_URL' ) // RhinoCompute server url. Use http://localhost:8081 if debugging locally.
+    //RhinoCompute.apiKey = getAuth( 'RHINO_COMPUTE_KEY' )  // RhinoCompute server api key. Leave blank if debugging locally.
+    RhinoCompute.url = 'http://localhost:8081/' //if debugging locally.
+    
+
+    // load a grasshopper file!
+    const url = definitionName
+    const res = await fetch(url)
+    const buffer = await res.arrayBuffer()
+    const arr = new Uint8Array(buffer)
+    definition = arr
+
+    init()
+    compute()
+    percentage()
 })
 
 
 
-let _threeMesh, _threeMaterial
 
-/**
- * Call appserver
- */
-async function compute(){
-  let t0 = performance.now()
-  const timeComputeStart = t0
+function onSliderChange() {
+    document.getElementById("aggregation").checked = false;
+}
 
-  // collect data from inputs
-  let data = {}
-  data.definition = definition  
-  data.inputs = {
-    'Number_People': inhabitants_slider.valueAsNumber,
-    'Fase_Extrusion': face_slider.valueAsNumber,
-    'Windows_Module_Base': windowbm_slider.valueAsNumber,
-    'Window_Aperture_MB': Window_Aperture_BM.valueAsNumber,
-    'Windows_Module02': windowm02_slider.valueAsNumber,
-    'Window_Aperture_M02': Window_Aperture_M02.valueAsNumber,
-    'Windows_Module03': windowm03_slider.valueAsNumber,
-    'Window_Aperture_M03': Window_Aperture_M03.valueAsNumber,    
-  }
+async function compute() {
 
-  console.log(data.inputs)
+    //Slider parameters
+    const param1 = new RhinoCompute.Grasshopper.DataTree('Number_People');
+    param1.append([0], [inhabitants_slider.valueAsNumber]);
+    const param2 = new RhinoCompute.Grasshopper.DataTree('Fase_Extrusion');
+    param2.append([0], [face_slider.valueAsNumber]);
 
-  const request = {
-    'method':'POST',
-    'body': JSON.stringify(data),
-    'headers': {'Content-Type': 'application/json'}
-  }
+    //Slider parameters Base Module
+    const param3 = new RhinoCompute.Grasshopper.DataTree('Windows_Module_Base');
+    param3.append([0], [windowbm_slider.valueAsNumber]);
+    const param4 = new RhinoCompute.Grasshopper.DataTree('Window_Aperture_MB');
+    param4.append([0], [Window_Aperture_BM.valueAsNumber]);
 
-  let headers = null
+    //Slider parameters Module 02
+    const param5 = new RhinoCompute.Grasshopper.DataTree('Windows_Module02');
+    param4.append([0], [windowm02_slider.valueAsNumber]);
+    const param6 = new RhinoCompute.Grasshopper.DataTree('Window_Aperture_M02');
+    param4.append([0], [Window_Aperture_M02.valueAsNumber]);
 
-  try {
-    const response = await fetch('/solve', request)
+    //Slider parameters Module 03
+    const param7 = new RhinoCompute.Grasshopper.DataTree('Windows_Module03');
+    param4.append([0], [windowm03_slider.valueAsNumber]);
+    const param8 = new RhinoCompute.Grasshopper.DataTree('Window_Aperture_M03');
+    param4.append([0], [Window_Aperture_M03.valueAsNumber]);
+    
+    
 
-    if(!response.ok)
-      throw new Error(response.statusText)
-      
-    headers = response.headers.get('server-timing')
-    const responseJson = await response.json()
 
-    collectResults(responseJson)
+    // clear values
+    const trees = []
+    trees.push(param1);
+    trees.push(param2);
+    trees.push(param3);
+    trees.push(param4);
+    trees.push(param5);
+    trees.push(param6);
+    trees.push(param7);
+    trees.push(param8);
+    
 
-    // Request finished. Do processing here.
-    let t1 = performance.now()
-    const computeSolveTime = t1 - timeComputeStart
-    t0 = t1
+    const res = await RhinoCompute.Grasshopper.evaluateDefinition(
+        definition, 
+        trees
+    );
+
+    doc = new rhino.File3dm();
 
     // hide spinner
-    //document.getElementById('loader').style.display = 'none'
-    //showSpinner(false)
-    //console.log(responseJson.values[0])
-    //let data = JSON.parse(responseJson.values[0].InnerTree['{0}'][0].data)
-    //let mesh = rhino.DracoCompression.decompressBase64String(data)
-      
-    t1 = performance.now()
-    const decodeMeshTime = t1 - t0
-    t0 = t1
-/*
-    if (!_threeMaterial) {
-      _threeMaterial = new THREE.MeshNormalMaterial()
-    }
-    
-    let threeMesh = meshToThreejs(mesh, _threeMaterial)
-    mesh.delete()
-    replaceCurrentMesh(threeMesh)
-*/
-    t1 = performance.now()
-    const rebuildSceneTime = t1 - t0
-
-    console.group(`[call compute and rebuild scene] = ${Math.round(t1-timeComputeStart)} ms`)
-    //console.log(`[call compute and rebuild scene] = ${Math.round(t1-timeComputeStart)} ms`)
-    console.log(`  ${Math.round(computeSolveTime)} ms: appserver request`)
-    let timings = headers.split(',')
-    let sum = 0
-    timings.forEach(element => {
-      let name = element.split(';')[0].trim()
-      let time = element.split('=')[1].trim()
-      sum += Number(time)
-      if (name === 'network') {
-        console.log(`  .. ${time} ms: appserver<->compute network latency`)
-      } else {
-        console.log(`  .. ${time} ms: ${name}`)
-      }
-    })
-    console.log(`  .. ${Math.round(computeSolveTime - sum)} ms: local<->appserver network latency`)
-    console.log(`  ${Math.round(decodeMeshTime)} ms: decode json to rhino3dm mesh`)
-    console.log(`  ${Math.round(rebuildSceneTime)} ms: create threejs mesh and insert in scene`)
-    console.groupEnd()
-
-  } catch(error) {
-    console.error(error)
-  }
-  
-}
-
-/**
- * Parse response
- */
- function collectResults(responseJson) {
-
-  const values = responseJson.values
-
-  // clear doc
-  if( doc !== undefined)
-      doc.delete()
-
-  //console.log(values)
-  doc = new rhino.File3dm()
-
-  // for each output (RH_OUT:*)...
-  for ( let i = 0; i < values.length; i ++ ) {
-    // ...iterate through data tree structure...
-    for (const path in values[i].InnerTree) {
-      const branch = values[i].InnerTree[path]
-      // ...and for each branch...
-      for( let j = 0; j < branch.length; j ++) {
-        // ...load rhino geometry into doc
-        const rhinoObject = decodeItem(branch[j])
-        if (rhinoObject !== null) {
-          doc.objects().add(rhinoObject, null)
-        }
-      }
-    }
-  }
-
-  if (doc.objects().count < 1) {
-    console.error('No rhino objects to load!')
-    showSpinner(false)
-    return
-  }
-
-  // load rhino doc into three.js scene
-  const buffer = new Uint8Array(doc.toByteArray()).buffer
-  loader.parse( buffer, function ( object ) 
-  {
-      // debug 
-      
-      object.traverse(child => {
-        if (child.material)
-          child.material = new THREE.MeshNormalMaterial()
-      }, false)
-      
-
-      // clear objects from scene. do this here to avoid blink
-      scene.traverse(child => {
-          if (!child.isLight && child.name !== 'context') {
-              scene.remove(child)
-          }
-      })
-
-      // add object graph from rhino model to three.js scene
-      scene.add( object )
-
-      // hide spinner and enable download button
-      showSpinner(false)
-      //downloadButton.disabled = false
-
-      // zoom to extents
-      //zoomCameraToSelection(camera, controls, scene.children)
-  })
-}
-
-/**
- * Shows or hides the loading spinner
- */
- function showSpinner(enable) {
-  if (enable)
-    document.getElementById('loader').style.display = 'block'
-  else
     document.getElementById('loader').style.display = 'none'
+
+    //decode GH objects and put them into rhino document
+    for (let i = 0; i < res.values.length; i++) {
+
+        for (const [key, value] of Object.entries(res.values[i].InnerTree)) {
+            for (const d of value) {
+
+                const data = JSON.parse(d.data)
+                const rhinoObject = rhino.CommonObject.decode(data)
+                doc.objects().add(rhinoObject, null)
+
+            }
+        }
+    }
+
+
+    
+
+    // clear objects from scene
+    scene.traverse(child => {
+        if (!child.isLight) {
+            scene.remove(child)
+        }
+    })
+
+
+    const buffer = new Uint8Array(doc.toByteArray()).buffer;
+    loader.parse(buffer, function (object) {
+  
+      // go through all objects, check for userstrings and assing colors
+  
+        // object.traverse((child) => {
+
+        //     if ( rhinoObject.geometry().userStringCount > 0 ) {
+
+        //         // if (child.userData.attributes.geometry.userStringCount > 0)
+
+        //         const material = new THREE.MeshBasicMaterial ( { color: "rgb(255,255,0)", wireframe: true} )
+        //         child.material = material
+
+        //         console.log(object)
+        //         console.log(child.userData.attributes.userStrings[0])
+        //         // const mat = new THREE.LineBasicMaterial( { 
+        //         //     color: "rgb(255,255,0)",
+        //         //     linewidth: 1
+        //         // } )
+        //         // child.material = mat;
+
+        //         // const geometry = loader.parse(mesh.toThreejsJSON())
+        //         // const edges = new THREE.EdgesGeometry( geometry );
+        //         // const line = new THREE.LineSegments( edges, new THREE.LineBasicMaterial( { color: rgb(255,255,0)}));
+        //         // scene.add(line);
+
+        //     }
+        // });
+
+        ///////////////////////////////////////////////////////////////////////
+        // add object graph from rhino model to three.js scene
+        scene.add(object);
+
+    });
+
+    //Enable download button
+    downloadButton.disabled = false;
+    runButton.disabled = false;
+
 }
 
-/**
- * Attempt to decode data tree item to rhino geometry
- */
- function decodeItem(item) {
-  const data = JSON.parse(item.data)
-  if (item.type === 'System.String') {
-    // hack for draco meshes
-    try {
-        return rhino.DracoCompression.decompressBase64String(data)
-    } catch {} // ignore errors (maybe the string was just a string...)
-  } else if (typeof data === 'object') {
-    return rhino.CommonObject.decode(data)
-  }
-  return null
-}
 
-/**
- * Called when a slider value changes in the UI. Collect all of the
- * slider values and call compute to solve for a new scene
- */
-function onSliderChange () {
-  // show spinner
-  showSpinner(true)
-  compute()
-}
+//Download button
+//function download (){
+    //let buffer = doc.toByteArray()
+    //let blob = new Blob([ buffer ], { type: "application/octect-stream" })
+    //let link = document.createElement('a')
+    //link.href = window.URL.createObjectURL(blob)
+    //link.download = 'spatialGreenhouse.3dm'
+    //link.click()
+//}
+
+
+
+
+
 
 // BOILERPLATE //
 
-var scene, camera, renderer, controls
+let scene, camera, renderer, controls
 
-function init () {
-  // Rhino models are z-up, so set this as the default
-  THREE.Object3D.DefaultUp = new THREE.Vector3( 0, 0, 1 );
+function init() {
 
-  scene = new THREE.Scene()
-  scene.background = new THREE.Color(1,1,1)
-  camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, 1, 1000 )
+    // Rhino models are z-up, so set this as the default
+    THREE.Object3D.DefaultUp = new THREE.Vector3( 0, 0, 1 );
 
-  renderer = new THREE.WebGLRenderer({antialias: true})
-  renderer.setPixelRatio( window.devicePixelRatio )
-  renderer.setSize( window.innerWidth, window.innerHeight )
-  document.body.appendChild(renderer.domElement)
+    // create a scene and a camera
+    scene = new THREE.Scene()
+    //scene.background = new THREE.Color(0x000000, 0)
+    camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000)
+    camera.position.x = - 50
+    camera.position.y = - 50
+    camera.position.z = - 50
 
-  controls = new OrbitControls( camera, renderer.domElement  )
+    // create the renderer and add it to the html
+    renderer = new THREE.WebGLRenderer({ antialias: true }) //alpha: true to set transparent background
+    renderer.setSize(window.innerWidth, window.innerHeight)
+    document.body.appendChild(renderer.domElement)
 
-  camera.position.z = 50
+    // add some controls to orbit the camera
+    controls = new OrbitControls(camera, renderer.domElement)
 
-  window.addEventListener( 'resize', onWindowResize, false )
+    // add a directional light
+    const directionalLight = new THREE.DirectionalLight(0xffffff)
+    directionalLight.intensity = 2
+    scene.add(directionalLight)
 
-  animate()
+    const ambientLight = new THREE.AmbientLight()
+    scene.add(ambientLight)
+
+    let cubeMap
+
+    cubeMap = new THREE.CubeTextureLoader()
+        .setPath('textures/cube/earth/')
+        .load( [ 'px.jpg', 'nx.jpg', 'py.jpg', 'ny.jpg', 'pz.jpg', 'nz.jpg' ] )
+    
+    scene.background = cubeMap
+
+    animate()
 }
 
-var animate = function () {
-  requestAnimationFrame( animate )
-  controls.update()
-  renderer.render( scene, camera )
-}
-  
+
 function onWindowResize() {
-  camera.aspect = window.innerWidth / window.innerHeight
-  camera.updateProjectionMatrix()
-  renderer.setSize( window.innerWidth, window.innerHeight )
-  animate()
+    camera.aspect = window.innerWidth / window.innerHeight
+    camera.updateProjectionMatrix()
+    renderer.setSize(window.innerWidth, window.innerHeight)
+    animate()
+}
+
+//const material = new THREE.MeshNormalMaterial()
+
+function meshToThreejs(mesh, material) {
+    const loader = new THREE.BufferGeometryLoader()
+    const geometry = loader.parse(mesh.toThreejsJSON())
+    //how do I give a material to the wireframe?
+    //const material = new THREE.material({ wireframe: true })
+    return new THREE.Mesh(geometry, material)
+}
+
+function animate() {
+    requestAnimationFrame(animate)
+
+    // //rotate shape a bit
+    // meshToThreejs.rotation.x += 0.01
+    // meshToThreejs.rotation.y += 0.01
+
+    renderer.render(scene, camera)
 }
