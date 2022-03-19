@@ -2,24 +2,55 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <link rel="icon" href="data:,">
-        <title>rnd_node.gh</title>
+        <title>MaCAD Space Station Modules - RECREATION</title>
         <style>
-            body {
-                margin: 0;
-                font-family: Arial, Helvetica, sans-serif;
+            #sideBar {
+                padding: 5px;
             }
-            canvas { width: 100%; height: 100%; }
-            input[type=range] { width: 100%; }
-            #container { position: relative; }
-            #container canvas, #overlay { position: absolute; }
-            #overlay { z-index: 1; width: 100%; }
-            #overlay div { padding: 5px; }
+
+            .slidecontainer {
+                position: absolute;
+                background: none;
+                width: 20%;
+                margin-top: 10px;
+                margin-left: 10px;
+
+            }
+
+            .slider {
+                -webkit-appearance: none;
+                width: 100%;
+                height: 5px;
+                border-radius: 5px;
+                background: #b9b9b9;
+                /* outline: solid gray 1px; */
+                opacity: 0.75;
+                -webkit-transition: .2s;
+                transition: opacity .2s;
+            }
+
+            .slider:hover {
+                opacity: 1;
+            }
+
+            .slider::-moz-range-thumb {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%; /* 0% makes it a square, 50% a circle*/ 
+                background: #ffffff;
+                cursor: pointer;
+            }
+
+
+            body { margin: 0; font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: rgb(255, 255, 255);}
+
+            #overlay {z-index: 1; width: 100%}
+
             #loader {
-                border: 5px solid #f3f3f3; /* Light grey */
-                border-top: 5px solid #3d3d3d; /* Grey */
+                border: 5px solid #ffffff71; /* Light grey */
+                border-top: 5px solid #525252; /* Grey */
                 border-radius: 50%;
-                width: 40px;
+                width: 80px;
                 height: 40px;
                 animation: spin 1s linear infinite;
                 position: absolute;
@@ -27,359 +58,228 @@
                 left: 50%;
                 z-index: 2;
             }
+
             @keyframes spin {
                 0% { transform: rotate(0deg); }
                 100% { transform: rotate(360deg); }
             }
+
+            /* .radio-toolbar {
+                margin: 5px;
+            } */
+
+            /*hide circular radio buttons*/
+            .radio-toolbar input[type="radio"] {
+                display: none;
+            }
+
+            .radio-toolbar label {
+                display: inline-block;
+                background-color: #ddd;
+                padding: 5px 5px;
+                font-family: sans-serif, Arial;
+                font-size: 10px;
+                color: #000000;
+                border-radius: 8px;
+                width: 20%;
+                text-align: center;
+            }
+
+            .radio-toolbar label:hover {
+                background-color: rgb(255, 255, 255);
+                cursor: pointer;
+            }
+            
+            .radio-toolbar input[type="radio"]:checked + label {
+                background-color: rgb(255, 255, 0);
+                text-align: center;
+            }
+
+            /* BOXES LEGEND */
+            .legend { list-style: none; }
+            .legend li { float: left; margin-right: 10px; }
+            .legend span { border: 1px solid #ccc; float: left; width: 10px; height: 10px; margin: 2px; }
+            /* your colors */
+            .legend .temp1 { background-color: #00ffdd; }
+            .legend .temp2 { background-color: #FFD500; }
+            .legend .temp3 { background-color: #FF0000; }
+            .legend .ph5 { background-color: #ff0000; }
+            .legend .ph6 { background-color: #ffa500; }
+            .legend .ph7 { background-color: #ffffff; }
+            .legend .prot { background-color: #ff0000; }
+            .legend .oils { background-color: #00ff00; }
+            .legend .carbs { background-color: #ffff00; }
+            .legend .flavour { background-color: #ff9600; }
+            .legend .water { background-color: #0000ff; }
+            .legend .health { background-color: #ff00ff; }
+            
+            /* GRADIENT LEGEND */
+            #gradient-roots {
+            height: 5px;
+            width: 100%;
+            border-radius: 10px;
+            border: 1px solid white;
+            background: linear-gradient(to right, #006400, #90ee90, #7fffd4, #e6e6fa);
+            }
+            #gradient-water {
+            height: 5px;
+            width: 100%;
+            border-radius: 10px;
+            border: 1px solid white;
+            background: linear-gradient(to right, #ffffff, #000078);
+            }
+            #gradient-height {
+            height: 5px;
+            width: 100%;
+            border-radius: 10px;
+            border: 1px solid white;
+            background: linear-gradient(to right, #ffffff, #000000);
+            }
+
+            .indicator {
+                position: absolute;
+                top: 0;
+                left: 25px;
+            }
+            .indicator::before {
+                content: "";
+                position: absolute;
+                bottom: 0.6em;
+                left: -20px;
+                right: 0px;
+                width: 1em;
+                border-top: 1.5px solid rgb(0, 0, 0);
+            }
+            .scale {
+                position: relative;
+            }
+
+            /* CHECKBOX */
+             /* Customize the label (the container) */
+            .container {
+                display: block;
+                position: relative;
+                padding-top: 3px;
+                padding-left: 35px;
+                margin-bottom: 12px;
+                cursor: pointer;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+
+            /* Hide the browser's default checkbox */
+            .container input {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+                height: 0;
+                width: 0;
+            }
+
+            /* Create a custom checkbox */
+            .checkmark {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 20px;
+                width: 30px;
+                background-color: #eee;
+                border-radius: 8px;
+            }
+
+            /* On mouse-over, add a grey background color */
+            .container:hover input ~ .checkmark {
+                background-color: #ccc;
+            }
+
+            /* When the checkbox is checked, add a blue background */
+            .container input:checked ~ .checkmark {
+                background-color: rgb(255, 255, 0);
+                border-radius: 8px;
+            }
+
+            /* Create the checkmark/indicator (hidden when not checked) */
+            .checkmark:after {
+                content: "";
+                position: absolute;
+                display: none;
+            }
+
+            /* Show the checkmark when checked */
+            .container input:checked ~ .checkmark:after {
+                display: block;
+            }
+            
+            /* Style the checkmark/indicator */
+            .container .checkmark:after {
+                left: 11px;
+                top: 0px;
+                width: 7px;
+                height: 15px;
+                border: solid rgb(0, 0, 0);
+                border-width: 0 1px 1px 0;
+                -webkit-transform: rotate(45deg);
+                -ms-transform: rotate(45deg);
+                transform: rotate(45deg);
+            }
+
         </style>
     </head>
-    <body>
+    <body style="background-color: rgb(0, 0, 0);"> <!--add style="background-color: purple" to set a background-->
+
         <div id="loader"></div> 
-        <div id="container">
-            <div id="overlay">
+        <div class="slidecontainer">
+
+            <div id="sideBar" style="background-color:rgba(0, 0, 0, 0.65);"> <!--style="background-color:rgba(255, 255, 255, 0.65-->
+                <div><h2>ORBITAL RECREATION</h2></div>
+                <div><h3>MODULE DESIGN</h3></div>
+                
                 <div>
-                  <label for="Number_People">Number_Inhabitants</label>
-                  <input type="range" id="Number_People" min="1" max="48" value="13" step="1">               
+                  <label for="Number_People">Number_Astronauts</label>
+                  <input type="range" id="Number_People" min="1" max="48" value="13" step="1">   
+                <div>      
+
+                  <div> 
                   <label for="Fase_Extrusion">Faces_Extrussion_Length</label>
                   <input type="range" id="Fase_Extrusion" min="1.00" max="1.25" value="1.10" step="0.01">
+                  <div> 
+
+                    <div>
                   <label for="Windows_Module_Base">BM_N_Windows</label>
                   <input type="range" id="Windows_Module_Base" min="1" max="4" value="4" step="1">
                   <label for="Window_Aperture_MB">BM_Windows_Opening</label>
                   <input type="range" id="Window_Aperture_MB" min="0.1" max="0.8" value="0.6" step="0.1">
-                  <label for="Windows_Module02">M02_N_Windows</label>
-                  <input type="range" id="Windows_Module02" min="1" max="5" value="2" step="1">
-                  <label for="Window_Aperture_M02">M02_Windows_Opening</label>
-                  <input type="range" id="Window_Aperture_M02" min="0.1" max="0.8" value="0.6" step="0.1">
-                  <label for="Windows_Module03">M03_N_Windows</label>
+                    </div>
+
+                    <div><label for="Windows_Module02">M02_N_Windows</label>
+                      <input type="range" id="Windows_Module02" min="1" max="5" value="2" step="1">
+                      <label for="Window_Aperture_M02">M02_Windows_Opening</label>
+                      <input type="range" id="Window_Aperture_M02" min="0.1" max="0.8" value="0.6" step="0.1">
+                      <label for="Windows_Module03">M03_N_Windows</label>
+                    </div>
+                  
+                  </div>
                   <input type="range" id="Windows_Module03" min="1" max="5" value="2" step="1">
                   <label for="Window_Aperture_M03">M03_Windows_Opening</label>
                   <input type="range" id="Window_Aperture_M03" min="0.1" max="0.8" value="0.4" step="0.1">                         
                 </div>
+                
                 <div><button id="downloadButton" disabled>Download</button></div>
                 <div><a href="PI_Example_ModuleAggGr" download="PI_Example_ModuleAggGr.html">Save source code</a></div>
             </div>
+
+                <div id="ui">
+                    <button id="runButton" onclick="run()" disabled>Compute</button><br>
+                    <button id="downloadButton" onclick="download()" disabled>Download</button>
+                </div>
+
+            </div>
         </div>
+        
 
-        <script type="module">
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.126.0/build/three.module.js'
-import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.126.0/examples/jsm/controls/OrbitControls.js'
-import { Rhino3dmLoader } from 'https://cdn.jsdelivr.net/npm/three@0.126.0/examples/jsm/loaders/3DMLoader.js'
-import rhino3dm from 'https://cdn.jsdelivr.net/npm/rhino3dm@0.15.0-beta/rhino3dm.module.js'
 
-// set up loader for converting the results to threejs
-const loader = new Rhino3dmLoader()
-loader.setLibraryPath( 'https://cdn.jsdelivr.net/npm/rhino3dm@0.15.0-beta/' )
-
-// initialise 'data' object that will be used by compute()
-const data = {
-  definition: 'PI_Example_ModuleAggGr',
-  inputs: getInputs()
-}
-
-// globals
-let rhino, doc
-
-rhino3dm().then(async m => {
-    rhino = m
-
-    init()
-    compute()
-})
-
-const downloadButton = document.getElementById("downloadButton")
-downloadButton.onclick = download
-
-  /////////////////////////////////////////////////////////////////////////////
- //                            HELPER  FUNCTIONS                            //
-/////////////////////////////////////////////////////////////////////////////
-
-/**
- * Gets <input> elements from html and sets handlers
- * (html is generated from the grasshopper definition)
- */
-function getInputs() {
-  const inputs = {}
-  for (const input of document.getElementsByTagName('input')) {
-    switch (input.type) {
-      case 'number':
-        inputs[input.id] = input.valueAsNumber
-        input.onchange = onSliderChange
-        break
-      case 'range':
-        inputs[input.id] = input.valueAsNumber
-        input.onmouseup = onSliderChange
-        input.ontouchend = onSliderChange
-        break
-      case 'checkbox':
-        inputs[input.id] = input.checked
-        input.onclick = onSliderChange
-        break
-      default:
-        break
-    }
-  }
-  return inputs
-}
-
-// more globals
-let scene, camera, renderer, controls
-
-/**
- * Sets up the scene, camera, renderer, lights and controls and starts the animation
- */
-function init() {
-
-    // Rhino models are z-up, so set this as the default
-    THREE.Object3D.DefaultUp = new THREE.Vector3( 0, 0, 1 );
-
-    // create a scene and a camera
-    scene = new THREE.Scene()
-    scene.background = new THREE.Color(1, 1, 1)
-    camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000)
-    camera.position.set(1, -1, 1) // like perspective view
-
-    // very light grey for background, like rhino
-    scene.background = new THREE.Color('whitesmoke')
-
-    // create the renderer and add it to the html
-    renderer = new THREE.WebGLRenderer({ antialias: true })
-    renderer.setPixelRatio( window.devicePixelRatio )
-    renderer.setSize(window.innerWidth, window.innerHeight)
-    document.body.appendChild(renderer.domElement)
-
-    // add some controls to orbit the camera
-    controls = new OrbitControls(camera, renderer.domElement)
-
-    // add a directional light
-    const directionalLight = new THREE.DirectionalLight( 0xffffff )
-    directionalLight.intensity = 2
-    scene.add( directionalLight )
-
-    const ambientLight = new THREE.AmbientLight()
-    scene.add( ambientLight )
-
-    // handle changes in the window size
-    window.addEventListener( 'resize', onWindowResize, false )
-
-    animate()
-}
-
-/**
- * Call appserver
- */
-async function compute() {
-  // construct url for GET /solve/definition.gh?name=value(&...)
-  const url = new URL('/solve/' + data.definition, window.location.origin)
-  Object.keys(data.inputs).forEach(key => url.searchParams.append(key, data.inputs[key]))
-  console.log(url.toString())
-  
-  try {
-    const response = await fetch(url)
-  
-    if(!response.ok) {
-      // TODO: check for errors in response json
-      throw new Error(response.statusText)
-    }
-
-    const responseJson = await response.json()
-
-    collectResults(responseJson)
-
-  } catch(error) {
-    console.error(error)
-  }
-}
-
-/**
- * Parse response
- */
-function collectResults(responseJson) {
-
-    const values = responseJson.values
-
-    // clear doc
-    if( doc !== undefined)
-        doc.delete()
-
-    //console.log(values)
-    doc = new rhino.File3dm()
-
-    // for each output (RH_OUT:*)...
-    for ( let i = 0; i < values.length; i ++ ) {
-      // ...iterate through data tree structure...
-      for (const path in values[i].InnerTree) {
-        const branch = values[i].InnerTree[path]
-        // ...and for each branch...
-        for( let j = 0; j < branch.length; j ++) {
-          // ...load rhino geometry into doc
-          const rhinoObject = decodeItem(branch[j])
-          if (rhinoObject !== null) {
-            doc.objects().add(rhinoObject, null)
-          }
-        }
-      }
-    }
-
-    if (doc.objects().count < 1) {
-      console.error('No rhino objects to load!')
-      showSpinner(false)
-      return
-    }
-
-    // load rhino doc into three.js scene
-    const buffer = new Uint8Array(doc.toByteArray()).buffer
-    loader.parse( buffer, function ( object ) 
-    {
-        // debug 
-        /*
-        object.traverse(child => {
-          if (child.material !== undefined)
-            child.material = new THREE.MeshNormalMaterial()
-        }, false)
-        */
-
-        // clear objects from scene. do this here to avoid blink
-        scene.traverse(child => {
-            if (!child.isLight) {
-                scene.remove(child)
-            }
-        })
-
-        // add object graph from rhino model to three.js scene
-        scene.add( object )
-
-        // hide spinner and enable download button
-        showSpinner(false)
-        downloadButton.disabled = false
-
-        // zoom to extents
-        zoomCameraToSelection(camera, controls, scene.children)
-    })
-}
-
-/**
- * Attempt to decode data tree item to rhino geometry
- */
-function decodeItem(item) {
-  const data = JSON.parse(item.data)
-  if (item.type === 'System.String') {
-    // hack for draco meshes
-    try {
-        return rhino.DracoCompression.decompressBase64String(data)
-    } catch {} // ignore errors (maybe the string was just a string...)
-  } else if (typeof data === 'object') {
-    return rhino.CommonObject.decode(data)
-  }
-  return null
-}
-
-/**
- * Called when a slider value changes in the UI. Collect all of the
- * slider values and call compute to solve for a new scene
- */
-function onSliderChange () {
-  showSpinner(true)
-  // get slider values
-  let inputs = {}
-  for (const input of document.getElementsByTagName('input')) {
-    switch (input.type) {
-    case 'number':
-      inputs[input.id] = input.valueAsNumber
-      break
-    case 'range':
-      inputs[input.id] = input.valueAsNumber
-      break
-    case 'checkbox':
-      inputs[input.id] = input.checked
-      break
-    }
-  }
-  
-  data.inputs = inputs
-
-  compute()
-}
-
-/**
- * The animation loop!
- */
-function animate() {
-  requestAnimationFrame( animate )
-  controls.update()
-  renderer.render(scene, camera)
-}
-
-/**
- * Helper function for window resizes (resets the camera pov and renderer size)
-  */
-function onWindowResize() {
-  camera.aspect = window.innerWidth / window.innerHeight
-  camera.updateProjectionMatrix()
-  renderer.setSize( window.innerWidth, window.innerHeight )
-  animate()
-}
-
-/**
- * Helper function that behaves like rhino's "zoom to selection", but for three.js!
- */
-function zoomCameraToSelection( camera, controls, selection, fitOffset = 1.2 ) {
-  
-  const box = new THREE.Box3();
-  
-  for( const object of selection ) {
-    if (object.isLight) continue
-    box.expandByObject( object );
-  }
-  
-  const size = box.getSize( new THREE.Vector3() );
-  const center = box.getCenter( new THREE.Vector3() );
-  
-  const maxSize = Math.max( size.x, size.y, size.z );
-  const fitHeightDistance = maxSize / ( 2 * Math.atan( Math.PI * camera.fov / 360 ) );
-  const fitWidthDistance = fitHeightDistance / camera.aspect;
-  const distance = fitOffset * Math.max( fitHeightDistance, fitWidthDistance );
-  
-  const direction = controls.target.clone()
-    .sub( camera.position )
-    .normalize()
-    .multiplyScalar( distance );
-  controls.maxDistance = distance * 10;
-  controls.target.copy( center );
-  
-  camera.near = distance / 100;
-  camera.far = distance * 100;
-  camera.updateProjectionMatrix();
-  camera.position.copy( controls.target ).sub(direction);
-  
-  controls.update();
-  
-}
-
-/**
- * This function is called when the download button is clicked
- */
-function download () {
-    // write rhino doc to "blob"
-    const bytes = doc.toByteArray()
-    const blob = new Blob([bytes], {type: "application/octect-stream"})
-
-    // use "hidden link" trick to get the browser to download the blob
-    const filename = data.definition.replace(/\.gh$/, '') + '.3dm'
-    const link = document.createElement('a')
-    link.href = window.URL.createObjectURL(blob)
-    link.download = filename
-    link.click()
-}
-
-/**
- * Shows or hides the loading spinner
- */
-function showSpinner(enable) {
-  if (enable)
-    document.getElementById('loader').style.display = 'block'
-  else
-    document.getElementById('loader').style.display = 'none'
-}
-        </script>
+        <script type="module" src="script.js"></script>
     </body>
 </html>
