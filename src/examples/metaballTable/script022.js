@@ -72,7 +72,7 @@ rhino3dm().then(async m => {
 
     init()
     compute()
-    percentage()
+   
 })
 
 
@@ -84,44 +84,7 @@ function onSliderChange() {
 
 async function compute() {
 
-    //Slider parameters
-    const param1 = new RhinoCompute.Grasshopper.DataTree('Number_People');
-    param1.append([0], [inhabitants_slider.valueAsNumber]);
-    const param2 = new RhinoCompute.Grasshopper.DataTree('Fase_Extrusion');
-    param2.append([0], [face_slider.valueAsNumber]);
-
-    //Slider parameters Base Module
-    const param3 = new RhinoCompute.Grasshopper.DataTree('Windows_Module_Base');
-    param3.append([0], [windowbm_slider.valueAsNumber]);
-    const param4 = new RhinoCompute.Grasshopper.DataTree('Window_Aperture_MB');
-    param4.append([0], [Window_Aperture_BM.valueAsNumber]);
-
-    //Slider parameters Module 02
-    const param5 = new RhinoCompute.Grasshopper.DataTree('Windows_Module02');
-    param4.append([0], [windowm02_slider.valueAsNumber]);
-    const param6 = new RhinoCompute.Grasshopper.DataTree('Window_Aperture_M02');
-    param4.append([0], [Window_Aperture_M02.valueAsNumber]);
-
-    //Slider parameters Module 03
-    const param7 = new RhinoCompute.Grasshopper.DataTree('Windows_Module03');
-    param4.append([0], [windowm03_slider.valueAsNumber]);
-    const param8 = new RhinoCompute.Grasshopper.DataTree('Window_Aperture_M03');
-    param4.append([0], [Window_Aperture_M03.valueAsNumber]);
-    
-    
-
-
-    // clear values
-    const trees = []
-    trees.push(param1);
-    trees.push(param2);
-    trees.push(param3);
-    trees.push(param4);
-    trees.push(param5);
-    trees.push(param6);
-    trees.push(param7);
-    trees.push(param8);
-    
+   
 
     const res = await RhinoCompute.Grasshopper.evaluateDefinition(
         definition, 
