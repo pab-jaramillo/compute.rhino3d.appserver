@@ -262,6 +262,105 @@ function onSliderChange () {
     document.getElementById('loader').style.display = 'none'
 }
 
+
+const res = await RhinoCompute.Grasshopper.evaluateDefinition(
+  definition, 
+  trees
+);
+
+doc = new rhino.File3dm();
+
+// hide spinner
+document.getElementById('loader').style.display = 'none'
+
+//decode GH objects and put them into rhino document
+for (let i = 0; i < res.values.length; i++) {
+
+  for (const [key, value] of Object.entries(res.values[i].InnerTree)) {
+      for (const d of value) {
+
+          const data = JSON.parse(d.data)
+          const rhinoObject = rhino.CommonObject.decode(data)
+          doc.objects().add(rhinoObject, null)
+
+      }
+  }
+}
+
+
+// go through the objects in the Rhino document
+let objects = doc.objects();
+// console.log(objects)
+for ( let i = 0; i < objects.count; i++ ) {
+
+  const rhinoObject = objects.get( i );
+  // console.log(rhinoObject)
+  
+  // asign geometry userstrings to object attributes
+  if ( rhinoObject.geometry().userStringCount > 0 ) {
+      const g_userStrings = rhinoObject.geometry().getUserStrings()
+      console.log(g_userStrings)
+      rhinoObject.attributes().setUserString(g_userStrings[0][0], g_userStrings[0][1])
+      rhinoObject.attributes().setUserString(g_userStrings[1][0], g_userStrings[1][1])
+
+      // const area = rhinoObject.geometry().getUserStrings()[0]
+      // const crops = rhinoObject.geometry().getUserStrings()[1]
+      // console.log(area);
+      // console.log(crops);
+  
+  }
+}
+
+
+// clear objects from scene
+scene.traverse(child => {
+  if (!child.isLight) {
+      scene.remove(child)
+  }
+})
+
+
+const buffer = new Uint8Array(doc.toByteArray()).buffer;
+loader.parse(buffer, function (object) {
+
+  // console.log(object);
+  scene.add(object);
+
+});
+
+//Enable download button
+downloadButton.disabled = false;
+runButton.disabled = false;
+
+}
+
+
+//DOWNLOAD BUTTON
+function download (){
+let buffer = doc.toByteArray()
+let blob = new Blob([ buffer ], { type: "application/octect-stream" })
+let link = document.createElement('a')
+link.href = window.URL.createObjectURL(blob)
+link.download = 'spatialGreenhouse.3dm'
+link.click()
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // BOILERPLATE //
 
 var scene, camera, renderer, controls
