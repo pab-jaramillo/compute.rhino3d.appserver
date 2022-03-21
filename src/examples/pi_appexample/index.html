@@ -19,7 +19,7 @@
 
             .slider {
                 -webkit-appearance: none;
-                width: 100%;
+                width: 80%;
                 height: 5px;
                 border-radius: 5px;
                 background: #b9b9b9;
@@ -49,10 +49,10 @@
             #loader {
                 border: 5px solid #ffffff71; /* Light grey */
                 border-top: 5px solid #525252; /* Grey */
-                border-radius: 50%;
-                width: 80px;
-                height: 40px;
-                animation: spin 1s linear infinite;
+                border-radius: 60%;
+                width: 70px;
+                height: 30px;
+                animation: spin 2s linear infinite;
                 position: absolute;
                 top: 50%;
                 left: 50%;
@@ -233,44 +233,70 @@
         <div class="slidecontainer">
 
             <div id="sideBar" style="background-color:rgba(0, 0, 0, 0.65);"> <!--style="background-color:rgba(255, 255, 255, 0.65-->
-                <div><h2>ORBITAL RECREATION</h2></div>
-                <div><h3>MODULE DESIGN</h3></div>
+                <div><h2>ORBITAL RECREATION - MODULES</h2></div>
+                <div><h3>SINGLE MODULE SCALE</h3></div>
                 
                 <div>
-                  <label for="astronauts">Number_Astronauts</label>
-                  <input type="range" id="astronauts" min="1" max="48" value="38" step="1">   
-                <div>      
-
-                  <div> 
-                  <label for="faces">Faces_Extrussion_Length</label>
-                  <input type="range" id="faces" min="100" max="125" value="110" step="1">
-                  <div> 
-
+                  <label for="scalemodule">Single Module Scale</label>
+                  <input type="range" id="astronauts" min="26" max="48" value="38" step="1"><div>                
                     <div>
-                  <label for="basemodule">BM_N_Windows</label>
-                  <input type="range" id="basemodule" min="1" max="4" value="4" step="1">
-                  <label for="windowbm">BM_Windows_Opening</label>
-                  <input type="range" id="windowbm" min="10" max="80" value="70" step="1">
-                    </div>
+                        <div><h3>MODULE DESIGN</h3></div>
+                        <div><h3>Base Module</h3>
+                            <div><label for="basemodule">Number of Windows Base Module</label>
+                            <input type="range" id="basemodule" min="1" max="4" value="4" step="1"></div>
+                            <div>
+                            <label for="windowbm">Base Module Windows Opening</label>
+                            <input type="range" id="windowbm" min="10" max="80" value="70" step="1"><div>
+                
+                        <div><h3>Module02</h3>
+                            <div><label for="module02">Number of Windows Module02</label>
+                            <input type="range" id="module02" min="1" max="5" value="2" step="1"><div>
+                            <div> <label for="window02">Module02 Windows Opening</label>
+                            <input type="range" id="window02" min="10" max="80" value="60" step="1">                      
+                            </div>
 
-                    <div><label for="module02">M02_N_Windows</label>
-                      <input type="range" id="module02" min="1" max="5" value="2" step="1">
-                      <label for="window02">M02_Windows_Opening</label>
-                      <input type="range" id="window02" min="10" max="80" value="60" step="1">                      
-                    </div>
-                  
-                  </div>
-                  <label for="module03">M03_N_Windows</label>
-                  <input type="range" id="module03" min="1" max="5" value="2" step="1">
-                  <label for="window03">M03_Windows_Opening</label>
-                  <input type="range" id="window03" min="10" max="80" value="40" step="1">                         
-                </div>
+                        <div><h3>Module03</h3>
+                            </div><label for="module03">Number of Windows Module03</label>
+                            <input type="range" id="module03" min="1" max="5" value="2" step="1"><div>
+                            <div><label for="window03">Module03 Windows Opening</label>
+                            <input type="range" id="window03" min="10" max="80" value="40" step="1"> </div>
+                    
+                                                
+                              
+                <div><h2>Solar Panels</h3></div>
+
+                    <div><h3>Base Module</h3>
+                        <input type="checkbox" id="panels">                        
+                        <label for="panelscntr">Panels ON/OFF </label></div>
+                        <div><label for="dispanelscntr">Solar Panels Distance</label>
+                        <input type="range" id="dispanelscntr" min="100" max="120" value="110" step="1"><div>
+                        <div><label for="sedpanelscntr">Solar Panels Disposition</label>
+                        <input type="range" id="sedpanelscntr" min="0" max="20" value="7" step="1"><div>
+
+                    <div><h3>Module02</h3>
+                        <input type="checkbox" id="panels">                        
+                        <label for="panels">Panels ON/OFF </label></div>
+                        <div><label for="dispanels">Solar Panels Distance</label>
+                        <input type="range" id="dispanels" min="100" max="120" value="110" step="1"><div>
+                        <div><label for="sedpanels">Solar Panels Disposition</label>
+                        <input type="range" id="sedpanels" min="0" max="20" value="4" step="1"><div> 
+                            
+                    <div><h3>Module03</h3>
+                        <input type="checkbox" id="panels">                        
+                        <label for="panelsright">Panels ON/OFF </label></div>
+                        <div><label for="dispanelsright">Solar Panels Distance</label>
+                        <input type="range" id="dispanelsright" min="100" max="120" value="110" step="1"><div>
+                        <div><label for="sedpanelsright">Solar Panels Disposition</label>
+                        <input type="range" id="sedpanelsright" min="0" max="20" value="4" step="1"><div>        
+
+                            
                 
                 <div><button id="downloadButton" disabled>Download</button></div>
                 <div><a href="PI_Example_ModuleAggGr" download="PI_Example_ModuleAggGr.html">Save source code</a></div>
             </div>
+            
 
-                <div id="ui">
+               <div id="ui">
                     <button id="runButton" onclick="run()" disabled>Compute</button><br>
                     <button id="downloadButton" onclick="download()" disabled>Download</button>
                 </div>

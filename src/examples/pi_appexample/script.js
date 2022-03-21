@@ -11,39 +11,63 @@ loader.setLibraryPath( 'https://cdn.jsdelivr.net/npm/rhino3dm@0.15.0-beta/' )
 
 const definition = 'PI_RecreationModule.gh'
 
-// setup input change events
-const inhabitants_slider = document.getElementById( 'astronauts' )
+//SINGLE MODULE SCALE
+const inhabitants_slider = document.getElementById( 'scalemodule' )
 inhabitants_slider.addEventListener( 'mouseup', onSliderChange, false )
 inhabitants_slider.addEventListener( 'touchend', onSliderChange, false )
 
-const face_slider = document.getElementById( 'faces' )
-face_slider.addEventListener( 'mouseup', onSliderChange, false )
-face_slider.addEventListener( 'touchend', onSliderChange, false )
-
+//MODULE DESIGN
+//Base Module
 const windowbm_slider = document.getElementById( 'basemodule' )
 windowbm_slider.addEventListener( 'mouseup', onSliderChange, false )
 windowbm_slider.addEventListener( 'touchend', onSliderChange, false )
-
 const Window_Aperture_BM = document.getElementById( 'windowbm' )
 Window_Aperture_BM.addEventListener( 'mouseup', onSliderChange, false )
 Window_Aperture_BM.addEventListener( 'touchend', onSliderChange, false )
 
+//Second Module
 const windowm02_slider = document.getElementById( 'module02' )
 windowm02_slider.addEventListener( 'mouseup', onSliderChange, false )
 windowm02_slider.addEventListener( 'touchend', onSliderChange, false )
+const Window_Aperture_M02_slider = document.getElementById( 'window02' )
+Window_Aperture_M02_slider.addEventListener( 'mouseup', onSliderChange, false )
+Window_Aperture_M02_slider.addEventListener( 'touchend', onSliderChange, false )
 
-const Window_Aperture_M02 = document.getElementById( 'window02' )
-Window_Aperture_M02.addEventListener( 'mouseup', onSliderChange, false )
-Window_Aperture_M02.addEventListener( 'touchend', onSliderChange, false )
-
+//Third Module
 const windowm03_slider = document.getElementById( 'module03' )
 windowm03_slider.addEventListener( 'mouseup', onSliderChange, false )
 windowm03_slider.addEventListener( 'touchend', onSliderChange, false )
+const Window_Aperture_M03_slider = document.getElementById( 'window03' )
+Window_Aperture_M03_slider.addEventListener( 'mouseup', onSliderChange, false )
+Window_Aperture_M03_slider.addEventListener( 'touchend', onSliderChange, false )
 
-const Window_Aperture_M03 = document.getElementById( 'window03' )
-Window_Aperture_M03.addEventListener( 'mouseup', onSliderChange, false )
-Window_Aperture_M03.addEventListener( 'touchend', onSliderChange, false )
+//SOLAR PANELS
+//BASE MODULE - missingtoggle
 
+const panelsdisbm_slider = document.getElementById( 'dispanelscntr' )
+panelsdisbm_slider.addEventListener( 'mouseup', onSliderChange, false )
+panelsdisbm_slider.addEventListener( 'touchend', onSliderChange, false )
+const panels_placebm_slider = document.getElementById( 'sedpanelscntr' )
+panels_placebm_slider.addEventListener( 'mouseup', onSliderChange, false )
+panels_placebm_slider.addEventListener( 'touchend', onSliderChange, false )
+
+//MODEL02 - missingtoggle
+
+const panelsdis02_slider = document.getElementById( 'dispanels' )
+panelsdis02_slider.addEventListener( 'mouseup', onSliderChange, false )
+panelsdis02_slider.addEventListener( 'touchend', onSliderChange, false )
+const panels_place02_slider = document.getElementById( 'sedpanels' )
+panels_place02_slider.addEventListener( 'mouseup', onSliderChange, false )
+panels_place02_slider.addEventListener( 'touchend', onSliderChange, false )
+
+//MODEL03 - missingtoggle
+
+const panelsdis03_slider = document.getElementById( 'dispanelsright' )
+panelsdis03_slider.addEventListener( 'mouseup', onSliderChange, false )
+panelsdis03_slider.addEventListener( 'touchend', onSliderChange, false )
+const panels_place03_slider = document.getElementById( 'sedpanelsright' )
+panels_place03_slider.addEventListener( 'mouseup', onSliderChange, false )
+panels_place03_slider.addEventListener( 'touchend', onSliderChange, false )
 
 
 rhino3dm().then(async m => {
@@ -66,17 +90,25 @@ async function compute () {
   const data = {
     definition: definition,
     inputs: {
-      'astronauts': inhabitants_slider.valueAsNumber,
-      'faces': face_slider.valueAsNumber,
-
+      
+      //SINGLE MODULE SCALE
+      'scalemodule': inhabitants_slider.valueAsNumber,   
+      
+      //MODULE DESIGN
+      //Base Module
       'basemodule': windowbm_slider.valueAsNumber,
       'windowbm': Window_Aperture_BM.valueAsNumber,
 
+      //MODULE02
       'module02': windowm02_slider.valueAsNumber,
       'window02': Window_Aperture_M02.valueAsNumber,
 
+      //MODULE02
       'module03': windowm03_slider.valueAsNumber,
       'window03': Window_Aperture_M03.valueAsNumber,
+
+      //SOLAR PANELS
+      //Base Module - AGREGAR PANELES SOLARES
       
     }
   }
