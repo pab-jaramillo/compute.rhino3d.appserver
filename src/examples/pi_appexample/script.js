@@ -21,29 +21,29 @@ inhabitants_slider.addEventListener( 'touchend', onSliderChange, false )
 const windowbm_slider = document.getElementById( 'basemodule' )
 windowbm_slider.addEventListener( 'mouseup', onSliderChange, false )
 windowbm_slider.addEventListener( 'touchend', onSliderChange, false )
-const Window_Aperture_BM = document.getElementById( 'windowbm' )
-Window_Aperture_BM.addEventListener( 'mouseup', onSliderChange, false )
-Window_Aperture_BM.addEventListener( 'touchend', onSliderChange, false )
+const window_aperture_bm_silder = document.getElementById( 'windowbm' )
+window_aperture_bm_silder.addEventListener( 'mouseup', onSliderChange, false )
+window_aperture_bm_silder.addEventListener( 'touchend', onSliderChange, false )
 
 //Second Module
 const windowm02_slider = document.getElementById( 'module02' )
 windowm02_slider.addEventListener( 'mouseup', onSliderChange, false )
 windowm02_slider.addEventListener( 'touchend', onSliderChange, false )
-const Window_Aperture_M02_slider = document.getElementById( 'window02' )
-Window_Aperture_M02_slider.addEventListener( 'mouseup', onSliderChange, false )
-Window_Aperture_M02_slider.addEventListener( 'touchend', onSliderChange, false )
+const window_aperture_m02_slider = document.getElementById( 'window02' )
+window_aperture_m02_slider.addEventListener( 'mouseup', onSliderChange, false )
+window_aperture_m02_slider.addEventListener( 'touchend', onSliderChange, false )
 
 //Third Module
 const windowm03_slider = document.getElementById( 'module03' )
 windowm03_slider.addEventListener( 'mouseup', onSliderChange, false )
 windowm03_slider.addEventListener( 'touchend', onSliderChange, false )
-const Window_Aperture_M03_slider = document.getElementById( 'window03' )
-Window_Aperture_M03_slider.addEventListener( 'mouseup', onSliderChange, false )
-Window_Aperture_M03_slider.addEventListener( 'touchend', onSliderChange, false )
+const window_aperture_m03_slider = document.getElementById( 'window03' )
+window_aperture_m03_slider.addEventListener( 'mouseup', onSliderChange, false )
+window_aperture_m03_slider.addEventListener( 'touchend', onSliderChange, false )
 
 //SOLAR PANELS
 //BASE MODULE - missingtoggle
-
+const bmpanels = document.getElementById('panelscntr');
 const panelsdisbm_slider = document.getElementById( 'dispanelscntr' )
 panelsdisbm_slider.addEventListener( 'mouseup', onSliderChange, false )
 panelsdisbm_slider.addEventListener( 'touchend', onSliderChange, false )
@@ -52,7 +52,7 @@ panels_placebm_slider.addEventListener( 'mouseup', onSliderChange, false )
 panels_placebm_slider.addEventListener( 'touchend', onSliderChange, false )
 
 //MODEL02 - missingtoggle
-
+const m02panels = document.getElementById('panels');
 const panelsdis02_slider = document.getElementById( 'dispanels' )
 panelsdis02_slider.addEventListener( 'mouseup', onSliderChange, false )
 panelsdis02_slider.addEventListener( 'touchend', onSliderChange, false )
@@ -61,7 +61,7 @@ panels_place02_slider.addEventListener( 'mouseup', onSliderChange, false )
 panels_place02_slider.addEventListener( 'touchend', onSliderChange, false )
 
 //MODEL03 - missingtoggle
-
+const m03panels = document.getElementById('panelsright');
 const panelsdis03_slider = document.getElementById( 'dispanelsright' )
 panelsdis03_slider.addEventListener( 'mouseup', onSliderChange, false )
 panelsdis03_slider.addEventListener( 'touchend', onSliderChange, false )
@@ -97,19 +97,31 @@ async function compute () {
       //MODULE DESIGN
       //Base Module
       'basemodule': windowbm_slider.valueAsNumber,
-      'windowbm': Window_Aperture_BM.valueAsNumber,
+      'windowbm': window_aperture_bm_silder.valueAsNumber,
 
       //MODULE02
       'module02': windowm02_slider.valueAsNumber,
-      'window02': Window_Aperture_M02.valueAsNumber,
+      'window02': window_aperture_m02_slider.valueAsNumber,
 
       //MODULE02
       'module03': windowm03_slider.valueAsNumber,
-      'window03': Window_Aperture_M03.valueAsNumber,
+      'window03': window_aperture_m03_slider.valueAsNumber,
 
       //SOLAR PANELS
       //Base Module - AGREGAR PANELES SOLARES
-      
+
+      'dispanelscntr': panelsdisbm_slider.valueAsNumber,
+      'sedpanelscntr': panels_placebm_slider.valueAsNumber,
+
+      //MODULE02
+
+      'dispanels': panelsdis02_slider.valueAsNumber,
+      'sedpanels': panels_place02_slider.valueAsNumber,
+
+      //MODULE02
+
+      'dispanelsright': panelsdis03_slider.valueAsNumber,
+      'sedpanelsright': panels_place03_slider.valueAsNumber,
     }
   }
 
