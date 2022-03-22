@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">    
+        <meta charset="utf-8">           
         
-        <meta name="viewport" content="width=device-width, initial-scale=2.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">       
-    
-        <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="style.css">
 
             
         <title>MaCAD Space Station Modules - RECREATION</title>
+
         <style>
-            #sideBar {padding: 10px;}                        
+            
+            #sideBar {padding: 10px;}                                  
 
             body { margin: 0; font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: rgb(255, 255, 255);}
 
@@ -35,17 +32,66 @@
             @keyframes spin {
                 10% { transform: rotate(90deg); }
                 90% { transform: rotate(360deg); }
-            }                     
+            } 
             
-            .slidecontainer {
+            .space {
+                background: rgba(1, 23, 24, 0.1) center / 300px 300px round;
+                border: 1px dashed rgb(0, 238, 255);
+                bottom: 0;
+                left: 0;
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
+
+            @keyframes space {
+                40% {opacity: 0.75; }
+                50% {opacity: 0.25; }
+                60% {opacity: 0.75; }
+                100% {transform: rotate(360deg); }
+            }
+
+            .stars1 {
+                animation: space 45s ease-in-out infinite;
+                background-image: 
+                radial-gradient(0.5px 0.5px at 25px 5px, white, rgba(255, 255, 255, 0)), 
+                radial-gradient(0.5px 0.5px at 50px 25px, white, rgba(255, 255, 255, 0)), 
+                radial-gradient(0.5px 0.5px at 125px 20px, white, rgba(255, 255, 255, 0)), 
+                radial-gradient(1px 1px at 50px 75px, white, rgba(255, 255, 255, 0)), 
+                radial-gradient(1px 1px at 15px 125px, white, rgba(255, 255, 255, 0)), 
+                radial-gradient(1.25px 1.25px at 110px 80px, white, rgba(255, 255, 255, 0));
+            }
+
+            .stars2 {
+                animation: space 60s ease-in-out infinite;
+                background-image: 
+                radial-gradient(0.5px 0.5px at 75px 125px, white, rgba(255, 255, 255, 0)), 
+                radial-gradient(0.5px 0.5px at 100px 75px, white, rgba(255, 255, 255, 0)), 
+                radial-gradient(1px 1px at 199px 100px, white, rgba(255, 255, 255, 0)), 
+                radial-gradient(1px 1px at 20px 50px, white, rgba(255, 255, 255, 0)), 
+                radial-gradient(1.25px 1.25px at 100px 5px, white, rgba(255, 255, 255, 0)), 
+                radial-gradient(1.25px 1.25x at 5px 5px, white, rgba(255, 255, 255, 0));
+            }
+  
+            .stars3 {
+                animation: space 75s ease-in-out infinite;
+                background-image: 
+                radial-gradient(0.5px 0.5px at 10px 10px, white, rgba(255, 255, 255, 0)), 
+                radial-gradient(0.5px 0.5px at 150px 150px, white, rgba(255, 255, 255, 0)), 
+                radial-gradient(1px 1px at 60px 170px, white, rgba(255, 255, 255, 0)), 
+                radial-gradient(1px 1px at 175px 180px, white, rgba(255, 255, 255, 0)), 
+                radial-gradient(1px 1px at 195px 95px, white, rgba(255, 255, 255, 0)), 
+                radial-gradient(1.25px 1.25px at 95px 145px, white, rgba(255, 255, 255, 0));
+            }
+            
+            .slidecontainer {                
                 position:absolute;
                 background: none;
                 width: 20%;                
                 margin-top: 400px;
                 margin-left: 100px;                
                 box-shadow: 0 0 15px #defbff, 0 0 15px #defbff, 0 0 15px #defbff;
-
-            }        
+            }                         
 
             .slider{
                 -webkit-appearance: none;
@@ -60,7 +106,7 @@
 
             .slider::-webkit-slider-thumb{
                 -webkit-appearance: none;
-                width: 15px;
+                width: 20px;
                 height: 10px;
                 border-radius: 2px;
                 background-color: rgba(0, 112, 116, 0.9);
@@ -72,7 +118,7 @@
             }
 
             .sliderLabel{
-                font-size: 10px;
+                font-size: 12px;
                 text-align: left;
                 padding: 2px;
                 padding-right: 0;
@@ -91,10 +137,10 @@
             }
 
             .finalLabeldownload{
-                font-size: 8px;
+                font-size: 12px;
                 text-align: center;
-                padding: 4px;                
-                padding-right: 0px;
+                padding: 4px;
+                padding-right: 0;
                 width: 80%;
                 display: inline-block;
                 font-weight: bold;
@@ -105,15 +151,15 @@
                 margin-bottom: 10px;
                 margin-left: 30px;
                 background-color: #98fffa33;
-                box-shadow: 0 0 5px #6eeeff, 0 0 5px #6eeeff, 0 0 5px #6eeeff;
+                box-shadow: 0 0 5px #defbff, 0 0 5px #defbff, 0 0 5px #defbff;
                 letter-spacing: 0.5px;
                 border-radius: 2px;
             }
             .finalLabelcode{
-                font-size: 8px;
+                font-size: 12px;
                 text-align: center;
-                padding: 5px;                
-                padding-right: 0px;
+                padding: 5px;
+                padding-right: 0;
                 width: 80%;
                 display: inline-block;
                 font-weight: bold;
@@ -124,7 +170,7 @@
                 margin-bottom: 10px;
                 margin-left: 28px;
                 background-color: #98fffa33;
-                box-shadow: 0 0 5px #6eeeff, 0 0 5px #6eeeff, 0 0 5px #6eeeff;
+                box-shadow: 0 0 5px #defbff, 0 0 5px #defbff, 0 0 5px #defbff;
                 letter-spacing: 0.5px;
                 border-radius: 2px;
             }
@@ -213,16 +259,22 @@
                 -webkit-transform: rotate(45deg);
                 -ms-transform: rotate(45deg);
                 transform: rotate(45deg);
-            }           
+            } 
+            
+            
             
 
            
         </style>
-    </head>        
+    </head>             
 
     <body style="background-color: rgba(0, 0, 0, 1);"> <!--add style="background-color: purple" to set a background-->
-        <div id="loader"></div> 
+        <div id="loader"></div>              
+
         <div class="slidecontainer">
+            <div class="space stars1"></div>
+            <div class="space stars2"></div>
+            <div class="space stars3"></div>
 
             <div id="sideBar" style="background-color:rgba(126, 126, 126, 0.65);"> <!--style="background-color:rgba(255, 255, 255, 0.65-->
                 <div><h2>ORBITAL RECREATION - MODULES</h2></div>
@@ -304,21 +356,22 @@
                 <div><a class="finalLabelcode" href="PI_RecreationModule.gh" download="PI_RecreationModule.html">SAVE SOURCE CODE</a></div><br> 
             </div>     
             
-            <div class="space stars1"></div>
-            <div class="space stars2"></div>
-            <div class="space stars3"></div>
+            
                         
             <br> 
             <div><h3>IAAC</h3><div>
             <h4>Digital Tools for Cloud-Based Data Management</h4>
 
-            <div><h5>Student: Pablo Isaac Jaramillo Pazmino</h5><div>
+            <div><h5>Student: Pablo Isaac Jaramillo Pazmino</h5><div>          
                
+        <script type="module" src="script.js"></script>  
 
+        
 
-        <script type="module" src="script.js"></script>        
+    </body>
 
-    </body>   
     
 
+     
+          
 </html>
