@@ -282,9 +282,9 @@ function init() {
     1,
     10000
   );
-  camera.position.x = 1000;
-  camera.position.y = 1000;
-  camera.position.z = 1000;
+  camera.position.x = 500;
+  camera.position.y = 500;
+  camera.position.z = 500;
 
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(window.devicePixelRatio);
