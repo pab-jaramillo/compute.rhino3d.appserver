@@ -4,25 +4,16 @@
         <meta charset="utf-8">        
         <title>MaCAD Space Station Modules - RECREATION</title>
         <style>
-            #sideBar {padding: 8px;}
-
-            .slidecontainer {
-                position: absolute;
-                background: none;
-                width: 10%;
-                margin-top: 10px;
-                margin-left: 10px;
-
-            }                    
+            #sideBar {padding: 10px;}                        
 
             body { margin: 0; font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: rgb(255, 255, 255);}
 
             #overlay {z-index: 1; width: 100%}
 
             #loader {
-                border: 5px solid #2c2c2c71; /* Light grey */
+                border: 5px solid #ffffff71; /* Light grey */
                 border-top: 10px solid #525252; /* Grey */
-                border-radius: 30%;
+                border-radius: 10%;
                 width: 80px;
                 height: 30px;
                 animation: spin 1.5s linear infinite;
@@ -30,6 +21,7 @@
                 top: 50%;
                 left: 50%;
                 z-index: 2;
+                box-shadow: 0 0 10px #ffffff, 0 0 10px #ffffff, 0 0 10px #ffffff;
             }
 
             @keyframes spin {
@@ -37,32 +29,118 @@
                 100% { transform: rotate(360deg); }
             }                     
             
-            .indicator {
+            .slidecontainer {
                 position: absolute;
-                top: 0;
-                left: 25px;
-            }
-            .indicator::before {
-                content: "";
-                position: absolute;
-                bottom: 0.6em;
-                left: -20px;
-                right: 0px;
-                width: 1em;
-                border-top: 1.5px solid rgb(255, 0, 0);
-            }
-            .scale {
+                background: none;
+                width: 15%;
+                margin-top: 100px;
+                margin-left: 25px;
+                box-shadow: 0 0 15px #defbff, 0 0 15px #defbff, 0 0 15px #defbff;
+
+            }        
+
+            .slider{
+                -webkit-appearance: none;
+                width: 170px;
+                height: 5px;
+                border-radius: 10px;
+                box-shadow: 0 0 5px #00d9ff69, 0 0 5px #00d9ff69, 0 0 5px #00d9ff69;
+                background-color: rgb(255, 255, 255);                
+            }           
+           
+
+            .slider::-webkit-slider-thumb{
+                -webkit-appearance: none;
+                width: 15px;
+                height: 10px;
+                border-radius: 2px;
+                background-color: rgba(0, 112, 116, 0.9);
+                box-shadow: 0 0 3px #defbff, 0 0 3px #defbff, 0 0 3px #defbff;
+                cursor: pointer;
+                cursor: pointer;
+                transition: color 0.4s linear;
                 position: relative;
+            }
+
+            .sliderLabel{
+                font-size: 10px;
+                text-align: left;
+                padding: 2px;
+                padding-right: 0;
+                width: 50%;
+                display: inline-block;
+                font-weight: bold;
+                color: rgb(137, 209, 216);
+                text-decoration: none;
+                font-style: normal;
+                margin-top: 5px;
+                margin-bottom: 5px;
+                background-color: #ffffff33;
+                box-shadow: 0 0 5px #defbff, 0 0 5px #defbff, 0 0 5px #defbff;
+                letter-spacing: 0.2px;
+                border-radius: 0px;
+            }
+
+            .finalLabeldownload{
+                font-size: 8px;
+                text-align: center;
+                padding: 4px;                
+                padding-right: 0px;
+                width: 80%;
+                display: inline-block;
+                font-weight: bold;
+                color: rgb(255, 255, 255);
+                text-decoration: none;
+                font-style: bold;
+                margin-top: 5px;
+                margin-bottom: 10px;
+                margin-left: 30px;
+                background-color: #98fffa33;
+                box-shadow: 0 0 5px #6eeeff, 0 0 5px #6eeeff, 0 0 5px #6eeeff;
+                letter-spacing: 0.5px;
+                border-radius: 2px;
+            }
+            .finalLabelcode{
+                font-size: 8px;
+                text-align: center;
+                padding: 5px;                
+                padding-right: 0px;
+                width: 80%;
+                display: inline-block;
+                font-weight: bold;
+                color: rgb(255, 255, 255);
+                text-decoration: none;
+                font-style: bold;
+                margin-top: 2px;
+                margin-bottom: 10px;
+                margin-left: 28px;
+                background-color: #98fffa33;
+                box-shadow: 0 0 5px #6eeeff, 0 0 5px #6eeeff, 0 0 5px #6eeeff;
+                letter-spacing: 0.5px;
+                border-radius: 2px;
             }
 
             /* CHECKBOX */
              /* Customize the label (the container) */
-            .container {
+             .container {
+                font-size: 10px;
+                text-align: left;
+                padding: 2px;
+                padding-right: 0;
+                width: 50%;
+                display: inline-block;
+                font-weight: bold;
+                color: rgb(137, 209, 216);
+                text-decoration: none;
+                font-style: normal;
+                margin-top: 5px;
+                margin-bottom: 5px;
+                background-color: #ffffff33;
+                box-shadow: 0 0 5px #defbff, 0 0 5px #defbff, 0 0 5px #defbff;
+                letter-spacing: 0.2px;
+
                 display: block;
-                position: relative;
-                padding-top: 3px;
-                padding-left: 35px;
-                margin-bottom: 12px;
+                position: relative;      
                 cursor: pointer;
                 -webkit-user-select: none;
                 -moz-user-select: none;
@@ -77,44 +155,57 @@
                 cursor: pointer;
                 height: 0;
                 width: 0;
-            }           
-
-            .slider{
-                -webkit-appearance: none;
-                width: 10px;
-                height: 8px;
-                border-radius: 5px;
-                border-color: rgb(204, 204, 204);
-                background-color: rgb(212, 212, 212);
             }
 
-            .slider::-webkit-slider-thumb{
-                -webkit-appearance: none;
-                width: 16px;
-                height: 16px;
-                border-radius: 12px;
-                background-color: rgba(184, 154, 255, 0.877);
-                cursor: pointer;
+            /* Create a custom checkbox */
+            .checkmark {
+                position: absolute;
+                top: 0px;
+                left: 200px;
+                height: 15px;
+                width: 30px;
+                background-color: #797979;
+                box-shadow: 0 0 5px #c4c4c4, 0 0 5px #c4c4c4, 0 0 5px #c4c4c4;
+                border-radius: 8px;
             }
 
-            .sliderLabel{
-                font-size: 10px;
-                text-align: left;
-                padding: 5px;
-                padding-right: 0;
-                width: 100%;
-                display: inline-block;
-                font-weight: bold;
-                color: rgb(153, 0, 255);
-                text-decoration: none;
-                font-style: normal;
-                margin-top: 5px;
-                margin-bottom: 5px;
-                background-color: white;
-                letter-spacing: 0.2px;
-                border-radius: 0px;
+            /* On mouse-over, add a grey background color */
+            .container:hover input ~ .checkmark {
+                background-color: #defbff;
+                box-shadow: 0 0 5px #defbff, 0 0 5px #defbff, 0 0 5px #defbff;
             }
 
+            /* When the checkbox is checked, add a blue background */
+            .container input:checked ~ .checkmark {
+                background-color: #00d9ff69;
+                border-radius: 8px;
+            }
+
+            /* Create the checkmark/indicator (hidden when not checked) */
+            .checkmark:after {
+                content: "";
+                position: absolute;
+                display: none;
+            }
+
+            /* Show the checkmark when checked */
+            .container input:checked ~ .checkmark:after {
+                display: block;
+            }
+            
+            /* Style the checkmark/indicator */
+            .container .checkmark:after {
+                left: 11px;
+                top: -3px;
+                width: 7px;
+                height: 12px;
+                border: solid rgb(255, 255, 255);               
+                border-width: 0 2px 2px 0;
+                -webkit-transform: rotate(45deg);
+                -ms-transform: rotate(45deg);
+                transform: rotate(45deg);
+            }
+           
         </style>
     </head>
     <body style="background-color: rgba(0, 0, 0, 0.418);"> <!--add style="background-color: purple" to set a background-->
@@ -122,70 +213,84 @@
         <div id="loader"></div> 
         <div class="slidecontainer">
 
-            <div id="sideBar" style="background-color:rgba(102, 102, 102, 0.65);"> <!--style="background-color:rgba(255, 255, 255, 0.65-->
+            <div id="sideBar" style="background-color:rgba(126, 126, 126, 0.65);"> <!--style="background-color:rgba(255, 255, 255, 0.65-->
                 <div><h2>ORBITAL RECREATION - MODULES</h2></div>
                 <div><h3>SINGLE MODULE SCALE</h3></div>
                 
                 <div>
-                  <label for="scalemodule">Single Module Scale</label>
-                  <input type="range" id="scalemodule" min="28" max="48" value="38" step="1"><div>                
+                  <label class = "sliderLabel" for="scalemodule">Single Module Scale</label>
+                  <input class = "slider" type="range" id="scalemodule" min="28" max="48" value="38" step="1"><div>                
                     <div>
                         <div><h3>MODULE DESIGN</h3></div>
                         <div><h3>Base Module</h3>
-                            <div><label for="basemodule">Number of Windows Base Module</label>
-                            <input type="range" id="basemodule" min="1" max="4" value="4" step="1"></div>
+                            <div><label class = "sliderLabel" for="basemodule">Number of Windows Base Module</label>
+                            <input class = "slider" type="range" id="basemodule" min="1" max="4" value="4" step="1"></div>
                             <div>
-                            <label for="windowbm">Base Module Windows Opening</label>
-                            <input type="range" id="windowbm" min="10" max="80" value="70" step="1"><div>
+                            <label class = "sliderLabel" for="windowbm">Base Module Windows Opening</label>
+                            <input class = "slider" type="range" id="windowbm" min="10" max="80" value="70" step="1"><div>
                 
                         <div><h3>Module02</h3>
-                            <div><label for="module02">Number of Windows Module02</label>
-                            <input type="range" id="module02" min="1" max="5" value="2" step="1"><div>
-                            <div> <label for="window02">Module02 Windows Opening</label>
-                            <input type="range" id="window02" min="10" max="80" value="60" step="1">                      
+                            <div><label class = "sliderLabel" for="module02">Number of Windows Module02</label>
+                            <input class = "slider" type="range" id="module02" min="1" max="5" value="2" step="1"><div>
+                            <div> <label class = "sliderLabel" for="window02">Module02 Windows Opening</label>
+                            <input class = "slider" type="range" id="window02" min="10" max="80" value="60" step="1">                      
                             </div>
 
                         <div><h3>Module03</h3>
-                            </div><label for="module03">Number of Windows Module03</label>
-                            <input type="range" id="module03" min="1" max="5" value="2" step="1"><div>
-                            <div><label for="window03">Module03 Windows Opening</label>
-                            <input type="range" id="window03" min="10" max="80" value="40" step="1"> </div>
+                            </div><label class = "sliderLabel" for="module03">Number of Windows Module03</label>
+                            <input class = "slider" type="range" id="module03" min="1" max="5" value="2" step="1"><div>
+                            <div><label class = "sliderLabel" for="window03">Module03 Windows Opening</label>
+                            <input class = "slider" type="range" id="window03" min="10" max="80" value="40" step="1"> </div>
                     
                                                 
                               
                 <div><h2>Solar Panels</h3></div>
 
                     <div><h3>Base Module</h3>
-                        <input type="checkbox" id="panels">                        
-                        <label for="panelscntr">Panels ON/OFF </label></div>
-                        <div><label for="dispanelscntr">Solar Panels Distance</label>
-                        <input type="range" id="dispanelscntr" min="100" max="120" value="110" step="1"><div>
-                        <div><label for="sedpanelscntr">Solar Panels Disposition</label>
-                        <input type="range" id="sedpanelscntr" min="1" max="20" value="7" step="1"><div>
+                        
+                        <label class="container"><strong>Panels BM ON/OFF</strong>
+                        <input type="checkbox" id="panelscntr">
+                        <span class="checkmark"></span></label></div><br>                      
+                                         
+                        
+                        <div><label class = "sliderLabel" for="dispanelscntr">Solar Panels Distance</label>
+                        <input class = "slider" type="range" id="dispanelscntr" min="100" max="120" value="110" step="1"><div>
+                        <div><label class = "sliderLabel" for="sedpanelscntr">Solar Panels Disposition</label>
+                        <input class = "slider" type="range" id="sedpanelscntr" min="1" max="20" value="7" step="1"><div>
 
                     <div><h3>Module02</h3>
-                        <input type="checkbox" id="panels">                        
-                        <label for="panels">Panels ON/OFF </label></div>
-                        <div><label for="dispanels">Solar Panels Distance</label>
-                        <input type="range" id="dispanels" min="100" max="120" value="110" step="1"><div>
-                        <div><label for="sedpanels">Solar Panels Disposition</label>
-                        <input type="range" id="sedpanels" min="1" max="20" value="4" step="1"><div> 
+
+                        <label class="container"><strong>Panels M02 ON/OFF</strong>
+                        <input type="checkbox" id="panels">
+                        <span class="checkmark"></span></label></div><br>                              
+                                           
+                        <div><label class = "sliderLabel" for="dispanels">Solar Panels Distance</label>
+                        <input class = "slider" type="range" id="dispanels" min="100" max="120" value="110" step="1"><div>
+                        <div><label class = "sliderLabel" for="sedpanels">Solar Panels Disposition</label>
+                        <input class = "slider" type="range" id="sedpanels" min="1" max="20" value="4" step="1"><div> 
                             
                     <div><h3>Module03</h3>
-                        <input type="checkbox" id="panels">                        
-                        <label for="panelsright">Panels ON/OFF </label></div>
-                        <div><label for="dispanelsright">Solar Panels Distance</label>
-                        <input type="range" id="dispanelsright" min="100" max="120" value="110" step="1"><div>
-                        <div><label for="sedpanelsright">Solar Panels Disposition</label>
-                        <input type="range" id="sedpanelsright" min="1" max="20" value="4" step="1"><div>        
+
+                        <label class="container"><strong>Panels M03 ON/OFF</strong>
+                        <input type="checkbox" id="panelscntr">
+                        <span class="checkmark"></span></label></div><br>                            
+                                                
+                        <div><label class = "sliderLabel" for="dispanelsright">Solar Panels Distance</label>
+                        <input class = "slider" type="range" id="dispanelsright" min="100" max="120" value="110" step="1"><div>
+                        <div><label class = "sliderLabel" for="sedpanelsright">Solar Panels Disposition</label>
+                        <input class = "slider" type="range" id="sedpanelsright" min="1" max="20" value="4" step="1"><div> <br>        
 
                             
-                
-                <div><button id="downloadButton" disabled>Download</button></div>
-                <div><a href="PI_RecreationModule" download="PI_RecreationModule.html">Save source code</a></div>
-            </div>           
+                            <br><br> 
+                            <br><div><button class="finalLabeldownload" id="downloadButton" disabled>DOWNLOAD</button></div>
+                <div><a class="finalLabelcode" href="PI_RecreationModule" download="PI_RecreationModule.html">SAVE SOURCE CODE</a></div><br> 
+            </div>          
 
-              
+            <br> 
+            <div><h3>IAAC</h3><div>
+            <h4>Digital Tools for Cloud-Based Data Management</h4>
+
+            <div><h5>Student: Pablo Isaac Jaramillo Pazmino</h5><div>
 
 
 
