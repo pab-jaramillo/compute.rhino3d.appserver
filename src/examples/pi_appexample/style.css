@@ -5,7 +5,7 @@ body {
   }
   
   .space {
-    background: rgba(44, 108, 110, 0.1) center / 200px 200px round;
+    background: rgba(44, 108, 110, 0.1) center / 300px 300px round;
     border: 1px dashed rgb(0, 238, 255);
     bottom: 0;
     left: 0;
