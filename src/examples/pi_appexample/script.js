@@ -263,14 +263,8 @@ function onSliderChange () {
 
     // process mesh
     let mesh_data = JSON.parse(responseJson.values[0].InnerTree['{ 0; }'][0].data)
-    let mesh = rhino.CommonObject.decode(mesh_data)
- 
-    if (!_threeMaterial) {
-      _threeMaterial = new THREE.MeshBasicMaterial({vertexColors:true, side:2})
-    }
-    let threeMesh = meshToThreejs(mesh, _threeMaterial)
-    mesh.delete()
-    replaceCurrentMesh(threeMesh)
+    let mesh = rhino.CommonObject.decode(mesh_data) 
+    
 
 // BOILERPLATE //
 
