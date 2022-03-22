@@ -33,7 +33,7 @@
                 position: absolute;
                 background: none;
                 width: 15%;
-                margin-top: 100px;
+                margin-top: 55px;
                 margin-left: 25px;
                 box-shadow: 0 0 15px #defbff, 0 0 15px #defbff, 0 0 15px #defbff;
 
@@ -208,7 +208,7 @@
            
         </style>
     </head>
-    <body style="background-color: rgba(255, 255, 255, 0.418);"> <!--add style="background-color: purple" to set a background-->
+    <body style="background-color: rgba(0, 0, 0, 1);"> <!--add style="background-color: purple" to set a background-->
 
         <div id="loader"></div> 
         <div class="slidecontainer">
@@ -222,7 +222,8 @@
                   <input class = "slider" type="range" id="scalemodule" min="28" max="48" value="38" step="1"><div>                
                     <div>
                         <div><h3>MODULE DESIGN</h3></div>
-                        <div><h3>Base Module</h3>
+                        <div><h3>Base Module</h3>                           
+
                             <div><label class = "sliderLabel" for="basemodule">Number of Windows Base Module</label>
                             <input class = "slider" type="range" id="basemodule" min="1" max="4" value="4" step="1"></div>
                             <div>
@@ -230,6 +231,11 @@
                             <input class = "slider" type="range" id="windowbm" min="10" max="80" value="70" step="1"><div>
                 
                         <div><h3>Module02</h3>
+
+                            <label class="container"><strong>Module02 ON/OFF</strong>
+                            <input type="checkbox" id="rightmodule">
+                            <span class="checkmark"></span></label></div><br>
+
                             <div><label class = "sliderLabel" for="module02">Number of Windows Module02</label>
                             <input class = "slider" type="range" id="module02" min="1" max="5" value="2" step="1"><div>
                             <div> <label class = "sliderLabel" for="window02">Module02 Windows Opening</label>
@@ -237,6 +243,11 @@
                             </div>
 
                         <div><h3>Module03</h3>
+
+                            <label class="container"><strong>Module03 ON/OFF</strong>
+                            <input type="checkbox" id="leftmodule">
+                            <span class="checkmark"></span></label></div><br>
+
                             </div><label class = "sliderLabel" for="module03">Number of Windows Module03</label>
                             <input class = "slider" type="range" id="module03" min="1" max="5" value="2" step="1"><div>
                             <div><label class = "sliderLabel" for="window03">Module03 Windows Opening</label>
@@ -283,9 +294,9 @@
                             
                             <br><br> 
                             <br><div><button class="finalLabeldownload" id="downloadButton" disabled>DOWNLOAD</button></div>
-                <div><a class="finalLabelcode" href="PI_RecreationModule" download="PI_RecreationModule.html">SAVE SOURCE CODE</a></div><br> 
-            </div>          
-
+                <div><a class="finalLabelcode" href="PI_RecreationModule.gh" download="PI_RecreationModule.html">SAVE SOURCE CODE</a></div><br> 
+            </div>        
+                        
             <br> 
             <div><h3>IAAC</h3><div>
             <h4>Digital Tools for Cloud-Based Data Management</h4>
