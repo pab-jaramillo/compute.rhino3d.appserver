@@ -1,7 +1,15 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">        
+        <meta charset="utf-8">    
+        
+        <meta name="viewport" content="width=device-width, initial-scale=2.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">       
+    
+        <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="style.css">
+
+            
         <title>MaCAD Space Station Modules - RECREATION</title>
         <style>
             #sideBar {padding: 10px;}                        
@@ -20,21 +28,21 @@
                 position: absolute;
                 top: 50%;
                 left: 50%;
-                z-index: 2;
+                z-index: 1;
                 box-shadow: 0 0 10px #ffffff, 0 0 10px #ffffff, 0 0 10px #ffffff;
             }
 
             @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
+                10% { transform: rotate(90deg); }
+                90% { transform: rotate(360deg); }
             }                     
             
             .slidecontainer {
-                position: absolute;
+                position:absolute;
                 background: none;
                 width: 15%;
                 margin-top: 55px;
-                margin-left: 25px;
+                margin-left: 25px;                
                 box-shadow: 0 0 15px #defbff, 0 0 15px #defbff, 0 0 15px #defbff;
 
             }        
@@ -204,12 +212,23 @@
                 -webkit-transform: rotate(45deg);
                 -ms-transform: rotate(45deg);
                 transform: rotate(45deg);
-            }
+            }           
+            
+
            
         </style>
-    </head>
-    <body style="background-color: rgba(0, 0, 0, 1);"> <!--add style="background-color: purple" to set a background-->
+    </head>    
 
+    <body>
+        <section class="background">
+            <div class="space stars1"></div>
+            <div class="space stars2"></div>
+            <div class="space stars3"></div>
+           
+        </section>
+    </body>
+
+    <body style="background-color: rgba(0, 0, 0, 1);"> <!--add style="background-color: purple" to set a background-->
         <div id="loader"></div> 
         <div class="slidecontainer">
 
@@ -232,9 +251,7 @@
                 
                         <div><h3>Module02</h3>
 
-                            <label class="container"><strong>Module02 ON/OFF</strong>
-                            <input type="checkbox" id="rightmodule">
-                            <span class="checkmark"></span></label></div><br>
+                           
 
                             <div><label class = "sliderLabel" for="module02">Number of Windows Module02</label>
                             <input class = "slider" type="range" id="module02" min="1" max="5" value="2" step="1"><div>
@@ -244,9 +261,7 @@
 
                         <div><h3>Module03</h3>
 
-                            <label class="container"><strong>Module03 ON/OFF</strong>
-                            <input type="checkbox" id="leftmodule">
-                            <span class="checkmark"></span></label></div><br>
+                            
 
                             </div><label class = "sliderLabel" for="module03">Number of Windows Module03</label>
                             <input class = "slider" type="range" id="module03" min="1" max="5" value="2" step="1"><div>
@@ -307,27 +322,7 @@
 
         <script type="module" src="script.js"></script>
     </body>
+    
+    
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Parallax Star Background</title>
-    
-        <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <section class="wrapper">
-            <div id="stars"></div>
-            <div id="stars2"></div>
-            <div id="stars3"></div>
-            <div id="title">
-                <span>PURE CSS</span>
-                <br>
-                <span>PARALLAX PIXEL BACKGROUND</span>
-            </div>
-        </section>
-    </body>
-    
 </html>
