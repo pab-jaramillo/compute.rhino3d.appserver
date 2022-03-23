@@ -25,15 +25,8 @@ rhino3dm().then(async m => {
     compute()
 })
 
-//Download button
-function download (){
-  let buffer = doc.toByteArray()
-  let blob = new Blob([ buffer ], { type: "application/octect-stream" })
-  let link = document.createElement('a')
-  link.href = window.URL.createObjectURL(blob)
-  link.download = 'PI_RecreationModule.3dm'
-  link.click()
-  }
+const downloadButton = document.getElementById("downloadButton")
+downloadButton.onclick = download
 
   /////////////////////////////////////////////////////////////////////////////
  //                            HELPER  FUNCTIONS                            //
